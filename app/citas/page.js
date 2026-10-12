@@ -7,7 +7,9 @@ export default function Citas() {
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
 
   const [citas, setCitas] = useState([]);
-const [cargado, setCargado] = useState(false);
+
+  const [cargado, setCargado] = useState(false);
+
   const [form, setForm] = useState({
 
     cliente: "",
@@ -23,29 +25,49 @@ const [cargado, setCargado] = useState(false);
     barbero: "",
 
   });
-useEffect(() => {
 
-  const guardadas = localStorage.getItem("dazzle_citas");
+  // Cargar citas guardadas
 
-  if (guardadas) {
+  useEffect(() => {
 
-    setCitas(JSON.parse(guardadas));
+    try {
 
-  }
+      const guardadas = localStorage.getItem("dazzle_citas");
 
-  setCargado(true);
+      if (guardadas) {
 
-}, []);
+        setCitas(JSON.parse(guardadas));
 
-useEffect(() => {
+      }
 
-  if (cargado) {
+    } catch (error) {
 
-    localStorage.setItem("dazzle_citas", JSON.stringify(citas));
+      console.error("Error al cargar citas:", error);
 
-  }
+    }
 
-}, [citas, cargado]);
+    setCargado(true);
+
+  }, []);
+
+  // Guardar citas automáticamente
+
+  useEffect(() => {
+
+    if (!cargado) return;
+
+    try {
+
+      localStorage.setItem("dazzle_citas", JSON.stringify(citas));
+
+    } catch (error) {
+
+      console.error("Error al guardar citas:", error);
+
+    }
+
+  }, [citas, cargado]);
+
   function guardarCita(e) {
 
     e.preventDefault();
@@ -58,7 +80,15 @@ useEffect(() => {
 
     }
 
-    setCitas((anteriores) => [...anteriores, form]);
+    const nuevaCita = {
+
+      ...form,
+
+      id: Date.now(),
+
+    };
+
+    setCitas((anteriores) => [...anteriores, nuevaCita]);
 
     setForm({
 
@@ -77,6 +107,24 @@ useEffect(() => {
     });
 
     setMostrarFormulario(false);
+
+  }
+
+  function eliminarCita(id) {
+
+    const confirmar = window.confirm(
+
+      "¿Seguro que quieres eliminar esta cita?"
+
+    );
+
+    if (!confirmar) return;
+
+    setCitas((anteriores) =>
+
+      anteriores.filter((cita) => cita.id !== id)
+
+    );
 
   }
 
@@ -122,7 +170,17 @@ useEffect(() => {
 
     >
 
-      <div style={{ maxWidth: "900px", margin: "0 auto" }}>
+      <div
+
+        style={{
+
+          maxWidth: "900px",
+
+          margin: "0 auto",
+
+        }}
+
+      >
 
         <a
 
@@ -164,13 +222,33 @@ useEffect(() => {
 
         </p>
 
-        <h1 style={{ fontSize: "48px", marginBottom: "10px" }}>
+        <h1
+
+          style={{
+
+            fontSize: "48px",
+
+            marginBottom: "10px",
+
+          }}
+
+        >
 
           Citas
 
         </h1>
 
-        <p style={{ color: "#999", fontSize: "20px" }}>
+        <p
+
+          style={{
+
+            color: "#999",
+
+            fontSize: "20px",
+
+          }}
+
+        >
 
           Agenda de Dazzle Styles Barbershop
 
@@ -194,11 +272,21 @@ useEffect(() => {
 
         >
 
-          <h2>📅 Citas de hoy</h2>
+          <h2>📅 Citas registradas</h2>
 
           {citas.length === 0 ? (
 
-            <p style={{ color: "#999", fontSize: "18px" }}>
+            <p
+
+              style={{
+
+                color: "#999",
+
+                fontSize: "18px",
+
+              }}
+
+            >
 
               No hay citas registradas todavía.
 
@@ -206,37 +294,141 @@ useEffect(() => {
 
           ) : (
 
-            citas.map((cita, index) => (citas.map((cita, index) => (
+            citas.map((cita) => (
 
               <div
 
-                key={index}
+                key={cita.id}
 
                 style={{
 
                   borderTop: "1px solid #333",
 
-                  padding: "15px 0",
+                  padding: "18px 0",
 
                 }}
 
               >
 
-                <strong>{cita.cliente}</strong>
+                <strong
 
-                <div style={{ color: "#aaa", marginTop: "6px" }}>
+                  style={{
 
-                  {cita.fecha} · {cita.hora}
+                    fontSize: "19px",
+
+                  }}
+
+                >
+
+                  {cita.cliente}
+
+                </strong>
+
+                {cita.telefono && (
+
+                  <div
+
+                    style={{
+
+                      color: "#aaa",
+
+                      marginTop: "7px",
+
+                    }}
+
+                  >
+
+                    📞 {cita.telefono}
+
+                  </div>
+
+                )}
+
+                <div
+
+                  style={{
+
+                    color: "#aaa",
+
+                    marginTop: "7px",
+
+                  }}
+
+                >
+
+                  📅 {cita.fecha} · ⏰ {cita.hora}
 
                 </div>
 
-                <div style={{ color: "#aaa" }}>
+                {cita.servicio && (
 
-                  {cita.servicio}
+                  <div
 
-                  {cita.barbero ? ` · ${cita.barbero}` : ""}
+                    style={{
 
-                </div>
+                      color: "#aaa",
+
+                      marginTop: "5px",
+
+                    }}
+
+                  >
+
+                    ✂️ {cita.servicio}
+
+                  </div>
+
+                )}
+
+                {cita.barbero && (
+
+                  <div
+
+                    style={{
+
+                      color: "#aaa",
+
+                      marginTop: "5px",
+
+                    }}
+
+                  >
+
+                    👤 {cita.barbero}
+
+                  </div>
+
+                )}
+
+                <button
+
+                  type="button"
+
+                  onClick={() => eliminarCita(cita.id)}
+
+                  style={{
+
+                    marginTop: "15px",
+
+                    padding: "10px 15px",
+
+                    borderRadius: "8px",
+
+                    border: "1px solid #555",
+
+                    background: "transparent",
+
+                    color: "#bbb",
+
+                    cursor: "pointer",
+
+                  }}
+
+                >
+
+                  🗑️ Eliminar
+
+                </button>
 
               </div>
 
@@ -249,6 +441,8 @@ useEffect(() => {
         {!mostrarFormulario ? (
 
           <button
+
+            type="button"
 
             onClick={() => setMostrarFormulario(true)}
 
@@ -316,7 +510,13 @@ useEffect(() => {
 
               onChange={(e) =>
 
-                setForm({ ...form, cliente: e.target.value })
+                setForm({
+
+                  ...form,
+
+                  cliente: e.target.value,
+
+                })
 
               }
 
@@ -334,7 +534,13 @@ useEffect(() => {
 
               onChange={(e) =>
 
-                setForm({ ...form, telefono: e.target.value })
+                setForm({
+
+                  ...form,
+
+                  telefono: e.target.value,
+
+                })
 
               }
 
@@ -350,7 +556,13 @@ useEffect(() => {
 
               onChange={(e) =>
 
-                setForm({ ...form, fecha: e.target.value })
+                setForm({
+
+                  ...form,
+
+                  fecha: e.target.value,
+
+                })
 
               }
 
@@ -366,7 +578,13 @@ useEffect(() => {
 
               onChange={(e) =>
 
-                setForm({ ...form, hora: e.target.value })
+                setForm({
+
+                  ...form,
+
+                  hora: e.target.value,
+
+                })
 
               }
 
@@ -382,7 +600,13 @@ useEffect(() => {
 
               onChange={(e) =>
 
-                setForm({ ...form, servicio: e.target.value })
+                setForm({
+
+                  ...form,
+
+                  servicio: e.target.value,
+
+                })
 
               }
 
@@ -398,7 +622,13 @@ useEffect(() => {
 
               onChange={(e) =>
 
-                setForm({ ...form, barbero: e.target.value })
+                setForm({
+
+                  ...form,
+
+                  barbero: e.target.value,
+
+                })
 
               }
 
@@ -425,6 +655,8 @@ useEffect(() => {
                 fontSize: "18px",
 
                 fontWeight: "bold",
+
+                cursor: "pointer",
 
               }}
 
@@ -458,6 +690,8 @@ useEffect(() => {
 
                 fontSize: "16px",
 
+                cursor: "pointer",
+
               }}
 
             >
@@ -477,5 +711,7 @@ useEffect(() => {
   );
 
 }
+
+  
 
 
