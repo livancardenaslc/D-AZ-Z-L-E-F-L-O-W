@@ -206,7 +206,7 @@ useEffect(() => {
 
           ) : (
 
-            citas.map((cita, index) => (
+            citas.map((cita, index) => (citas.map((cita, index) => (
 
               <div
 
