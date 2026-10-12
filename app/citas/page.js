@@ -23,7 +23,29 @@ const [cargado, setCargado] = useState(false);
     barbero: "",
 
   });
+useEffect(() => {
 
+  const guardadas = localStorage.getItem("dazzle_citas");
+
+  if (guardadas) {
+
+    setCitas(JSON.parse(guardadas));
+
+  }
+
+  setCargado(true);
+
+}, []);
+
+useEffect(() => {
+
+  if (cargado) {
+
+    localStorage.setItem("dazzle_citas", JSON.stringify(citas));
+
+  }
+
+}, [citas, cargado]);
   function guardarCita(e) {
 
     e.preventDefault();
