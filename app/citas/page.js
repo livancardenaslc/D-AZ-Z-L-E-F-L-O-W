@@ -58,7 +58,7 @@ useEffect(() => {
 
     }
 
-    setCitas([...citas, form]);
+    setCitas((anteriores) => [...anteriores, form]);
 
     setForm({
 
