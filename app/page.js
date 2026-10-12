@@ -2,17 +2,67 @@ export default function Home() {
 
   const menu = [
 
-    { icon: "📅", title: "Citas", text: "Agenda y próximas citas", href: "/citas" },
+    {
 
-    { icon: "✂️", title: "Barberos", text: "Equipo y horarios" },
+      icon: "📅",
 
-    { icon: "👥", title: "Clientes", text: "Directorio de clientes" },
+      title: "Citas",
 
-    { icon: "💰", title: "Ventas", text: "Ingresos y servicios" },
+      text: "Agenda y próximas citas",
 
-    { icon: "📊", title: "Reportes", text: "Rendimiento del negocio" },
+      href: "/citas",
 
-    { icon: "⚙️", title: "Configuración", text: "Administrar barbería" },
+    },
+
+    {
+
+      icon: "✂️",
+
+      title: "Barberos",
+
+      text: "Equipo y horarios",
+
+    },
+
+    {
+
+      icon: "👥",
+
+      title: "Clientes",
+
+      text: "Directorio de clientes",
+
+    },
+
+    {
+
+      icon: "💰",
+
+      title: "Ventas",
+
+      text: "Ingresos y servicios",
+
+    },
+
+    {
+
+      icon: "📊",
+
+      title: "Reportes",
+
+      text: "Rendimiento del negocio",
+
+    },
+
+    {
+
+      icon: "⚙️",
+
+      title: "Configuración",
+
+      text: "Administrar barbería",
+
+    },
 
   ];
 
@@ -26,11 +76,11 @@ export default function Home() {
 
         background: "#050505",
 
-        color: "#ffffff",
+        color: "white",
 
         fontFamily: "Arial, sans-serif",
 
-        padding: "28px 20px 50px",
+        padding: "40px 20px",
 
       }}
 
@@ -44,11 +94,11 @@ export default function Home() {
 
             color: "#d4af37",
 
-            fontWeight: "700",
+            fontWeight: "bold",
 
-            letterSpacing: "3px",
+            letterSpacing: "4px",
 
-            marginBottom: "8px",
+            fontSize: "18px",
 
           }}
 
@@ -58,13 +108,33 @@ export default function Home() {
 
         </p>
 
-        <h1 style={{ fontSize: "32px", margin: "0 0 8px" }}>
+        <h1
+
+          style={{
+
+            fontSize: "48px",
+
+            margin: "10px 0",
+
+          }}
+
+        >
 
           Panel de control
 
         </h1>
 
-        <p style={{ color: "#999", marginBottom: "30px" }}>
+        <p
+
+          style={{
+
+            color: "#999",
+
+            fontSize: "20px",
+
+          }}
+
+        >
 
           Dazzle Styles Barbershop
 
@@ -74,31 +144,47 @@ export default function Home() {
 
           style={{
 
-            border: "1px solid #292929",
+            background: "#111",
 
-            borderRadius: "18px",
+            border: "1px solid #333",
 
-            padding: "22px",
+            borderRadius: "20px",
 
-            marginBottom: "25px",
+            padding: "25px",
 
-            background: "#101010",
+            marginTop: "35px",
 
           }}
 
         >
 
-          <span style={{ color: "#999" }}>Ventas de hoy</span>
+          <div
 
-          <h2
+            style={{
+
+              color: "#999",
+
+              fontSize: "18px",
+
+            }}
+
+          >
+
+            Ventas de hoy
+
+          </div>
+
+          <div
 
             style={{
 
               color: "#d4af37",
 
-              fontSize: "38px",
+              fontSize: "48px",
 
-              margin: "10px 0 5px",
+              fontWeight: "bold",
+
+              marginTop: "10px",
 
             }}
 
@@ -106,9 +192,23 @@ export default function Home() {
 
             $0.00
 
-          </h2>
+          </div>
 
-          <span style={{ color: "#777" }}>0 servicios completados</span>
+          <div
+
+            style={{
+
+              color: "#888",
+
+              marginTop: "5px",
+
+            }}
+
+          >
+
+            0 servicios completados
+
+          </div>
 
         </div>
 
@@ -118,9 +218,11 @@ export default function Home() {
 
             display: "grid",
 
-            gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
+            gridTemplateColumns: "repeat(2, 1fr)",
 
-            gap: "14px",
+            gap: "15px",
+
+            marginTop: "25px",
 
           }}
 
@@ -128,45 +230,71 @@ export default function Home() {
 
           {menu.map((item) => (
 
-            <div
+            <a
 
               key={item.title}
 
+              href={item.href || "#"}
+
               style={{
 
-                background: "#101010",
+                background: "#111",
 
-                border: "1px solid #292929",
+                border: "1px solid #333",
 
-                borderRadius: "16px",
+                borderRadius: "18px",
 
-                padding: "20px",
+                padding: "25px 20px",
+
+                textDecoration: "none",
+
+                color: "white",
+
+                display: "block",
 
               }}
 
             >
 
-              <div style={{ fontSize: "28px", marginBottom: "14px" }}>
+              <div
+
+                style={{
+
+                  fontSize: "32px",
+
+                  marginBottom: "20px",
+
+                }}
+
+              >
 
                 {item.icon}
 
               </div>
 
-              <h3 style={{ margin: "0 0 7px", fontSize: "18px" }}>
-
-                {item.title}
-
-              </h3>
-
-              <p
+              <div
 
                 style={{
 
-                  margin: 0,
+                  fontSize: "22px",
 
-                  color: "#888",
+                  fontWeight: "bold",
 
-                  fontSize: "13px",
+                }}
+
+              >
+
+                {item.title}
+
+              </div>
+
+              <div
+
+                style={{
+
+                  color: "#999",
+
+                  marginTop: "10px",
 
                   lineHeight: "1.4",
 
@@ -176,9 +304,9 @@ export default function Home() {
 
                 {item.text}
 
-              </p>
+              </div>
 
-            </div>
+            </a>
 
           ))}
 
@@ -188,17 +316,17 @@ export default function Home() {
 
           style={{
 
-            marginTop: "30px",
-
             borderTop: "1px solid #d4af37",
 
-            paddingTop: "18px",
+            marginTop: "40px",
+
+            paddingTop: "20px",
+
+            textAlign: "center",
 
             color: "#777",
 
             fontSize: "12px",
-
-            textAlign: "center",
 
           }}
 
