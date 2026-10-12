@@ -2,7 +2,7 @@ export default function Home() {
 
   const menu = [
 
-    { icon: "📅", title: "Citas", text: "Agenda y próximas citas" },
+    { icon: "📅", title: "Citas", text: "Agenda y próximas citas", href: "/citas" },
 
     { icon: "✂️", title: "Barberos", text: "Equipo y horarios" },
 
