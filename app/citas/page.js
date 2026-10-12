@@ -7,7 +7,7 @@ export default function Citas() {
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
 
   const [citas, setCitas] = useState([]);
-
+const [cargado, setCargado] = useState(false);
   const [form, setForm] = useState({
 
     cliente: "",
